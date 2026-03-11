@@ -1,6 +1,5 @@
 import arcade
 import arcade.gui
-import user_manager
 import openscreen
 users_db = {}
 
