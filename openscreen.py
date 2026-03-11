@@ -13,7 +13,7 @@ class WelcomeView(arcade.View):
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
 
-        arcade.set_background_color(arcade.color.DARK_BLUE_GRAY)
+        arcade.set_background_color(arcade.color.DARK_MOSS_GREEN)
         self.v_box = arcade.gui.UIBoxLayout(space_between=20)
 
         # כותרת
