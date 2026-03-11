@@ -1,9 +1,6 @@
 import json
 import os
-
 DB_FILE = "users.json"
-
-
 def load_users():
     if not os.path.exists(DB_FILE):
         return {}
