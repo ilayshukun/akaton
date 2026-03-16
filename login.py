@@ -2,6 +2,7 @@ import arcade
 import arcade.gui
 import openscreen
 import user_manger
+import questions_screen
 users_db = user_manger.load_users()
 
 
@@ -62,6 +63,8 @@ class LoginView(arcade.View):
         if email in users_db and users_db[email]['password'] == int(password):
             self.message_label.text = "Login successful!"
             self.message_label.text_color = arcade.color.GREEN
+            questions_view = questions_screen.QuestionsView()
+            self.window.show_view(questions_view)
         else:
             print(email)
             print(users_db[email]["password"])
@@ -78,3 +81,4 @@ class LoginView(arcade.View):
 
     def on_hide_view(self):
         self.manager.disable()
+

@@ -3,8 +3,8 @@ import arcade.gui
 import login
 import register
 
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 1000
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
 SCREEN_TITLE = "Finance Simulation"
 
 class WelcomeView(arcade.View):
