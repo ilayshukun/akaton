@@ -1,9 +1,9 @@
 import arcade
 import arcade.gui
 import openscreen
-
+import user_manger
 # מסד הנתונים הגלובלי (כדאי לוודא שהוא מוגדר בקובץ הראשי שלך כדי שגם ה-Login וגם ה-Register יראו אותו)
-users_db = {}
+users_db =user_manger.load_users()
 
 
 class RegisterView(arcade.View):
@@ -37,6 +37,34 @@ class RegisterView(arcade.View):
         self.password_input = arcade.gui.UIInputText(width=250, height=40, text="")
         password_row.add(self.password_input.with_background(color=arcade.color.DARK_GRAY))
         self.v_box.add(password_row)
+
+        # --- שורת שם פרטי ---
+        firstname_row = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
+        firstname_label = arcade.gui.UILabel(text="First Name:", text_color=arcade.color.WHITE, font_size=16, width=100)
+        firstname_row.add(firstname_label)
+
+        self.firstname_input = arcade.gui.UIInputText(width=250, height=40, text="")
+        # שים לב לשינוי כאן למטה: self.firstname_input במקום self.password_input
+        firstname_row.add(self.firstname_input.with_background(color=arcade.color.DARK_GRAY))
+        self.v_box.add(firstname_row)
+
+        # --- Last Name שורת שם משפחה ---
+        lastname_row = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
+        lastname_label = arcade.gui.UILabel(text="Last Name:", text_color=arcade.color.WHITE, font_size=16, width=100)
+        lastname_row.add(lastname_label)
+
+        self.lastname_input = arcade.gui.UIInputText(width=250, height=40, text="")
+        lastname_row.add(self.lastname_input.with_background(color=arcade.color.DARK_GRAY))
+        self.v_box.add(lastname_row)
+
+        # --- Birth Date שורת תאריך לידה ---
+        birthdate_row = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
+        birthdate_label = arcade.gui.UILabel(text="Birth Date:", text_color=arcade.color.WHITE, font_size=16, width=100)
+        birthdate_row.add(birthdate_label)
+
+        self.birthdate_input = arcade.gui.UIInputText(width=250, height=40, text="DD/MM/YYYY")
+        birthdate_row.add(self.birthdate_input.with_background(color=arcade.color.DARK_GRAY))
+        self.v_box.add(birthdate_row)
 
         # --- הודעות שגיאה/הצלחה ---
         self.message_label = arcade.gui.UILabel(text="", text_color=arcade.color.YELLOW, font_size=14)
@@ -73,14 +101,17 @@ class RegisterView(arcade.View):
 
         # אם הכל תקין - הצלחה!
         else:
-            users_db[email] = password
+            user_manger.register_user(email,password)
             self.message_label.text = "Success! Account created."
             self.message_label.text_color = arcade.color.GREEN
             print("Users in system:", users_db)
 
     def on_click_back(self, event):
+        new_db=users_db
         welcome_view = openscreen.WelcomeView()
         self.window.show_view(welcome_view)
+        new_db=user_manger.load_users()
+
 
     def on_draw(self):
         self.clear()

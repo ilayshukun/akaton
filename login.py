@@ -1,8 +1,8 @@
 import arcade
 import arcade.gui
 import openscreen
-
-users_db = {"test@gmail.com": "1234"}
+import user_manger
+users_db = user_manger.load_users()
 
 
 class LoginView(arcade.View):
@@ -37,6 +37,7 @@ class LoginView(arcade.View):
         password_row.add(self.password_input.with_background(color=arcade.color.DARK_GRAY))
         self.v_box.add(password_row)
 
+
         # --- הודעות שגיאה ---
         self.message_label = arcade.gui.UILabel(text="", text_color=arcade.color.YELLOW, font_size=14)
         self.v_box.add(self.message_label)
@@ -57,11 +58,13 @@ class LoginView(arcade.View):
     def on_click_login(self, event):
         email = self.email_input.text.strip()
         password = self.password_input.text.strip()
-
-        if email in users_db and users_db[email] == password:
+        #print(email in users_db)
+        if email in users_db and users_db[email]['password'] == int(password):
             self.message_label.text = "Login successful!"
             self.message_label.text_color = arcade.color.GREEN
         else:
+            print(email)
+            print(users_db[email]["password"])
             self.message_label.text = "Error: Invalid email or password."
             self.message_label.text_color = arcade.color.RED
 

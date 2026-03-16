@@ -15,15 +15,15 @@ def save_users(users_data):
     with open(DB_FILE, "w", encoding="utf-8") as file:
         json.dump(users_data, file, indent=4)
 
-
-def register_user(email, password, first_name="", last_name="", birth_date=""):
+# הפונקציה נבדקה והיא עובדת טוב
+def register_user(email, password=0, first_name="", last_name="", birth_date=""):
     users = load_users()
     if email in users:
         return False, "המשתמש כבר קיים במערכת."
 
     # במערכת אמיתית נצפין את הסיסמה, אך לצורך הסימולציה נשמור כטקסט
     users[email] = {
-        "password": password,
+        "password": int(password),
         "first_name": first_name,
         "last_name": last_name,
         "birth_date": birth_date,
@@ -31,7 +31,6 @@ def register_user(email, password, first_name="", last_name="", birth_date=""):
     }
     save_users(users)
     return True, "ההרשמה בוצעה בהצלחה!"
-
 
 def login_user(email, password):
     users = load_users()
