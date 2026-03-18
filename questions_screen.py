@@ -45,7 +45,7 @@ class QuestionsView(arcade.View):
         self.v_box.add(self.answer_input.with_background(color=arcade.color.DARK_GRAY))
 
         # כפתור שליחה
-        submit_button = arcade.gui.UIFlatButton(text="שלח תשובה וקבל סיטואציה חדשה", width=300)
+        submit_button = arcade.gui.UIFlatButton(text="send answer", width=300)
         self.v_box.add(submit_button)
 
         @submit_button.event("on_click")
@@ -65,7 +65,7 @@ class QuestionsView(arcade.View):
         self.get_new_situation()
 
     def get_new_situation(self):
-        prompt = "Give me one short finance situation for teenagers and ask a question about it. Be concise."
+        prompt = "Give me one short finance situation for teenagers and ask a question about  how you would act in this situation. Be concise."
         ai_response = ask_ollama(prompt)
         self.question_text.text = ai_response
 
@@ -74,7 +74,7 @@ class QuestionsView(arcade.View):
         if not user_reply.strip():
             return
 
-        prompt = f"The user answered: '{user_reply}' to the previous situation. Give a very brief feedback and then provide a new finance situation for a teenager with a question."
+        prompt = f"The user answered: '{user_reply}' to the previous situation. Give a very brief feedback."
 
         self.question_text.text = "ה-AI חושב..."
         self.answer_input.text = ""  # איפוס התיבה
