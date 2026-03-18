@@ -45,7 +45,5 @@ class WelcomeView(arcade.View):
     def on_draw(self):
         self.clear()
         self.manager.draw()
-
-
     def on_hide_view(self):
         self.manager.disable()

@@ -2,8 +2,6 @@ import arcade
 import arcade.gui
 import requests
 
-
-
 def ask_ollama(prompt):
     url = "http://localhost:11434/api/generate"
     payload = {
