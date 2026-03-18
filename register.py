@@ -2,6 +2,7 @@ import arcade
 import arcade.gui
 import openscreen
 import user_manger
+import financial_info
 # מסד הנתונים הגלובלי (כדאי לוודא שהוא מוגדר בקובץ הראשי שלך כדי שגם ה-Login וגם ה-Register יראו אותו)
 users_db =user_manger.load_users()
 
@@ -89,22 +90,23 @@ class RegisterView(arcade.View):
         email = self.email_input.text.strip()
         password = self.password_input.text.strip()
 
-        # בדיקה 1: האם השדות ריקים?
         if email == "" or password == "":
             self.message_label.text = "Error: Fields cannot be empty."
             self.message_label.text_color = arcade.color.RED
-
-        # בדיקה 2: האם המשתמש כבר קיים במערכת?
-        elif email in users_db:
+        elif email in user_manger.load_users():
             self.message_label.text = "Error: User already exists!"
             self.message_label.text_color = arcade.color.RED
-
-        # אם הכל תקין - הצלחה!
         else:
-            user_manger.register_user(email,password)
-            self.message_label.text = "Success! Account created."
-            self.message_label.text_color = arcade.color.GREEN
-            print("Users in system:", users_db)
+            # במקום לרשום ישר, נשמור את הנתונים זמנית ונעבור למסך הבא
+            temp_data = {
+                "password": password,
+                "first_name": self.firstname_input.text,
+                "last_name": self.lastname_input.text,
+                "birth_date": self.birthdate_input.text
+            }
+            # מעבר למסך הנתונים הפיננסיים
+            fin_view = financial_info.FinancialInfoView(email, temp_data)
+            self.window.show_view(fin_view)
 
     def on_click_back(self, event):
         new_db=users_db

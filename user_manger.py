@@ -10,7 +10,21 @@ def load_users():
         except json.JSONDecodeError:
             return {}
 
+def register_user(email, password=0, first_name="", last_name="", birth_date="", financial_data=None):
+    users = load_users()
+    if email in users:
+        return False, "המשתמש כבר קיים במערכת."
 
+    users[email] = {
+        "password": int(password),
+        "first_name": first_name,
+        "last_name": last_name,
+        "birth_date": birth_date,
+        "balance": 1000,
+        "financial_info": financial_data or {} # שמירת הנתונים החדשים כאן
+    }
+    save_users(users)
+    return True, "ההרשמה בוצעה בהצלחה!"
 def save_users(users_data):
     with open(DB_FILE, "w", encoding="utf-8") as file:
         json.dump(users_data, file, indent=4)
