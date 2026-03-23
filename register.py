@@ -106,7 +106,6 @@ class RegisterView(arcade.View):
             # מעבר למסך הנתונים הפיננסיים
             fin_view = financial_info.FinancialInfoView(email, temp_data)
             self.window.show_view(fin_view)
-
     def on_click_back(self, event):
         new_db=users_db
         welcome_view = openscreen.WelcomeView()

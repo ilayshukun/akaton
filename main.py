@@ -1,10 +1,11 @@
 import arcade
-from openscreen import  *
+import openscreen
 
-
+def main():
+    window = arcade.Window(800, 600, "Finance Sim")
+    welcome = openscreen.WelcomeView()
+    window.show_view(welcome)
+    arcade.run()
 
 if __name__ == "__main__":
-    window = arcade.Window(SCREEN_WIDTH,SCREEN_HEIGHT, SCREEN_TITLE)
-    welcome_view = WelcomeView()
-    window.show_view(welcome_view)
-    arcade.run()
+    main()

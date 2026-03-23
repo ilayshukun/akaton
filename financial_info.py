@@ -53,7 +53,6 @@ class FinancialInfoView(arcade.View):
             "monthly_income": self.income.text,
             "goal": self.goal.text
         }
-
         # הרשמה סופית ל-JSON דרך ה-Manager
         user_manger.register_user(
             self.email,

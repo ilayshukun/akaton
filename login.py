@@ -3,7 +3,6 @@ import arcade.gui
 import openscreen
 import user_manger
 import questions_screen
-users_db = user_manger.load_users()
 
 
 class LoginView(arcade.View):
@@ -11,69 +10,53 @@ class LoginView(arcade.View):
         super().__init__()
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
+
+        # החזרת הרקע המקורי
         arcade.set_background_color(arcade.color.DARK_JUNGLE_GREEN)
 
-        # התיבה הראשית
         self.v_box = arcade.gui.UIBoxLayout(space_between=20)
 
-        # כותרת המסך - הסרנו את with_space_around
-        self.title = arcade.gui.UILabel(text="Sign In", text_color=arcade.color.WHITE, font_size=30, bold=True)
-        self.v_box.add(self.title)
+        # כותרת
+        self.v_box.add(arcade.gui.UILabel(text="Sign In", font_size=30, bold=True))
 
-        # --- שורת אימייל ---
-        email_row = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
-        email_label = arcade.gui.UILabel(text="Email:", text_color=arcade.color.WHITE, font_size=16, width=100)
-        email_row.add(email_label)
+        # שדות קלט בעיצוב המקורי (אפור כהה)
+        self.email_input = arcade.gui.UIInputText(width=250, height=40, text="").with_background(
+            color=arcade.color.DARK_GRAY)
+        self.password_input = arcade.gui.UIInputText(width=250, height=40, text="").with_background(
+            color=arcade.color.DARK_GRAY)
 
-        self.email_input = arcade.gui.UIInputText(width=250, height=40, text="")
-        email_row.add(self.email_input.with_background(color=arcade.color.DARK_GRAY))
-        self.v_box.add(email_row)
+        self.v_box.add(arcade.gui.UILabel(text="Email:"))
+        self.v_box.add(self.email_input)
+        self.v_box.add(arcade.gui.UILabel(text="Password:"))
+        self.v_box.add(self.password_input)
 
-        # --- שורת סיסמה ---
-        password_row = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
-        password_label = arcade.gui.UILabel(text="Password:", text_color=arcade.color.WHITE, font_size=16, width=100)
-        password_row.add(password_label)
-
-        self.password_input = arcade.gui.UIInputText(width=250, height=40, text="")
-        password_row.add(self.password_input.with_background(color=arcade.color.DARK_GRAY))
-        self.v_box.add(password_row)
-
-
-        # --- הודעות שגיאה ---
-        self.message_label = arcade.gui.UILabel(text="", text_color=arcade.color.YELLOW, font_size=14)
+        self.message_label = arcade.gui.UILabel(text="", text_color=arcade.color.YELLOW)
         self.v_box.add(self.message_label)
 
-        # --- כפתורים ---
-        login_button = arcade.gui.UIFlatButton(text="Submit Sign In", width=200)
-        login_button.on_click = self.on_click_login
-        self.v_box.add(login_button)
+        # כפתור התחברות
+        login_btn = arcade.gui.UIFlatButton(text="Submit Sign In", width=200)
+        login_btn.on_click = self.on_click_login
+        self.v_box.add(login_btn)
 
-        back_button = arcade.gui.UIFlatButton(text="Back", width=200)
-        back_button.on_click = self.on_click_back
-        self.v_box.add(back_button)
+        # כפתור חזרה (Back) - מעוצב באותו סגנון
+        back_btn = arcade.gui.UIFlatButton(text="Back", width=200)
+        back_btn.on_click = lambda x: self.window.show_view(openscreen.WelcomeView())
+        self.v_box.add(back_btn)
 
         anchor = arcade.gui.UIAnchorLayout()
         anchor.add(child=self.v_box, anchor_x="center_x", anchor_y="center_y")
         self.manager.add(anchor)
 
     def on_click_login(self, event):
+        users = user_manger.load_users()
         email = self.email_input.text.strip()
-        password = self.password_input.text.strip()
-        #print(email in users_db)
-        if email in users_db and users_db[email]['password'] == int(password):
-            self.message_label.text = "Login successful!"
-            self.message_label.text_color = arcade.color.GREEN
-            questions_view = questions_screen.QuestionsView()
-            self.window.show_view(questions_view)
-        else:
-            print(email)
-            print(users_db[email]["password"])
-            self.message_label.text = "Error: Invalid email or password."
-            self.message_label.text_color = arcade.color.RED
+        pw = self.password_input.text.strip()
 
-    def on_click_back(self, event):
-        welcome_view = openscreen.WelcomeView()
-        self.window.show_view(welcome_view)
+        # בדיקת תקינות פרטים
+        if email in users and str(users[email]['password']) == pw:
+            self.window.show_view(questions_screen.QuestionsView())
+        else:
+            self.message_label.text = "Invalid credentials"
 
     def on_draw(self):
         self.clear()
@@ -81,4 +64,3 @@ class LoginView(arcade.View):
 
     def on_hide_view(self):
         self.manager.disable()
-
