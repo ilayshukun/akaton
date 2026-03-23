@@ -32,7 +32,7 @@ class RegisterView(arcade.View):
 
         # --- שורת סיסמה ---
         password_row = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
-        password_label = arcade.gui.UILabel(text="Password:", text_color=arcade.color.WHITE, font_size=16, width=100)
+        password_label = arcade.gui.UILabel(text="Password(only digits):", text_color=arcade.color.WHITE, font_size=16, width=100)
         password_row.add(password_label)
 
         self.password_input = arcade.gui.UIInputText(width=250, height=40, text="")
@@ -60,10 +60,10 @@ class RegisterView(arcade.View):
 
         # --- Birth Date שורת תאריך לידה ---
         birthdate_row = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
-        birthdate_label = arcade.gui.UILabel(text="Birth Date:", text_color=arcade.color.WHITE, font_size=16, width=100)
+        birthdate_label = arcade.gui.UILabel(text="age:", text_color=arcade.color.WHITE, font_size=16, width=100)
         birthdate_row.add(birthdate_label)
 
-        self.birthdate_input = arcade.gui.UIInputText(width=250, height=40, text="DD/MM/YYYY")
+        self.birthdate_input = arcade.gui.UIInputText(width=250, height=40, text="")
         birthdate_row.add(self.birthdate_input.with_background(color=arcade.color.DARK_GRAY))
         self.v_box.add(birthdate_row)
 
@@ -89,7 +89,6 @@ class RegisterView(arcade.View):
     def on_click_register(self, event):
         email = self.email_input.text.strip()
         password = self.password_input.text.strip()
-
         if email == "" or password == "":
             self.message_label.text = "Error: Fields cannot be empty."
             self.message_label.text_color = arcade.color.RED
@@ -102,7 +101,7 @@ class RegisterView(arcade.View):
                 "password": password,
                 "first_name": self.firstname_input.text,
                 "last_name": self.lastname_input.text,
-                "birth_date": self.birthdate_input.text
+                "age": self.birthdate_input.text
             }
             # מעבר למסך הנתונים הפיננסיים
             fin_view = financial_info.FinancialInfoView(email, temp_data)

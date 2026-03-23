@@ -1,31 +1,17 @@
 {
-    "a": {
-        "password": 1,
-        "first_name": "",
-        "last_name": "",
-        "birth_date": "",
-        "balance": 1000
-    },
-    "1": {
-        "password": 1,
-        "first_name": "",
-        "last_name": "",
-        "birth_date": "",
-        "balance": 1000
-    },
-    "A": {
-        "password": 1,
-        "first_name": "A",
-        "last_name": "B",
-        "birth_date": "2000",
+    "demo1": {
+        "password": 3421,
+        "first_name": "itay",
+        "last_name": "toast",
+        "birth_date": "14",
         "balance": 1000,
         "financial_info": {
-            "money": "200",
-            "social_meetings": "3",
-            "is_working": "yes",
-            "job_type": "dance",
-            "monthly_income": "5000",
-            "goal": "20000"
+            "money": "1000000",
+            "social_meetings": "30",
+            "is_working": "no",
+            "job_type": "high tech",
+            "monthly_income": "100",
+            "goal": "100000000000"
         }
     }
 }

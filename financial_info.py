@@ -46,7 +46,7 @@ class FinancialInfoView(arcade.View):
     def on_finish(self, event):
         # איסוף הנתונים החדשים
         fin_data = {
-            "money": self.money.text,
+            "money": self.money,
             "social_meetings": self.social.text,
             "is_working": self.working.text,
             "job_type": self.job_type.text,
